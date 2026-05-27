@@ -42,7 +42,7 @@ export const Todo = ({ style }: TodoProps): JSX.Element => {
   }, [selectedStatus, todos]);
 
   function handleAddTodo() {
-    if (input.current) {
+    if (input.current && input.current.value !== "") {
       dispatch({
         type: "ADD",
         payload: { text: input.current.value, id: crypto.randomUUID() },
@@ -69,10 +69,11 @@ export const Todo = ({ style }: TodoProps): JSX.Element => {
   }
 
   function handleUpdate(id: string, text: string) {
-    dispatch({
-      type: "UPDATE",
-      payload: { id, text },
-    });
+    if (text)
+      dispatch({
+        type: "UPDATE",
+        payload: { id, text },
+      });
   }
 
   return (
@@ -93,7 +94,7 @@ export const Todo = ({ style }: TodoProps): JSX.Element => {
         </button>
       </div>
       <div className=" w-full max-w-lg bg-white shadow-lg rounded-lg p-4 flex flex-col flex-1 overflow-hidden min-h-0">
-        {memoizedFilterArray.length == 0 ? (
+        {todos.length == 0 ? (
           <h1>No Todo,Please Add </h1>
         ) : (
           <>
