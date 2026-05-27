@@ -7,6 +7,8 @@ export function reducer(state: Todo[], action: Action): Todo[] {
         id: action.payload.id,
         text: action.payload.text,
         status: "Incomplete",
+        date: new Date().toLocaleDateString(),
+        time: new Date().toLocaleTimeString(),
       };
       const newTodo = [...state, newObj];
       return newTodo;
@@ -21,6 +23,8 @@ export function reducer(state: Todo[], action: Action): Todo[] {
               ...todo,
               text: action.payload.text ?? todo.text,
               status: action.payload.status ?? todo.status,
+              date: new Date().toLocaleDateString(),
+              time: new Date().toLocaleTimeString(),
             }
           : todo,
       );

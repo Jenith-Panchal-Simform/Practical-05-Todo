@@ -36,6 +36,16 @@ const TodoItem = ({
         >
           {todo.status}
         </span>
+        <span
+          className={`ml-3 px-2 py-0.5 text-xs font-medium rounded-full bg-gray-500 text-gray-100`}
+        >
+          {todo.date}
+        </span>
+        <span
+          className={`ml-3 px-2 py-0.5 text-xs font-medium rounded-full bg-gray-500 text-gray-100`}
+        >
+          {todo.time}
+        </span>
       </div>
       <div className="flex gap-1">
         <button

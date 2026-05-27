@@ -10,6 +10,8 @@ export type Todo = {
   id: string;
   text: string;
   status: "Incomplete" | "Complete";
+  date: string;
+  time: string;
 };
 
 export type Action =
@@ -20,6 +22,8 @@ export type Action =
         id?: string;
         text?: string;
         status?: "Incomplete" | "Complete";
+        date?: string;
+        time?: string;
       };
     }
   | { type: "DELETE"; payload: { id: string } };
@@ -33,6 +37,7 @@ export const Todo = ({ style }: TodoProps): JSX.Element => {
   const [selectedStatus, setSelectedStatus] = useState("All");
 
   useEffect(() => {
+    console.log(todos);
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
@@ -99,18 +104,23 @@ export const Todo = ({ style }: TodoProps): JSX.Element => {
         ) : (
           <>
             <ul className="flex flex-col gap-1.5 overflow-y-auto flex-1 min-h-0">
-              {memoizedFilterArray.map((todo) => (
-                <li key={todo.id}>
-                  <TodoItem
-                    todo={todo}
-                    handleDelete={() => handleDelete(todo.id)}
-                    handleStatusChange={() =>
-                      handleStatusChange(todo.id, todo.status)
-                    }
-                    handleUpdate={handleUpdate}
-                  />
-                </li>
-              ))}
+              {memoizedFilterArray.map((todo) => {
+                const today = new Date().toLocaleDateString();
+                return (
+                  todo.date === today && (
+                    <li key={todo.id}>
+                      <TodoItem
+                        todo={todo}
+                        handleDelete={() => handleDelete(todo.id)}
+                        handleStatusChange={() =>
+                          handleStatusChange(todo.id, todo.status)
+                        }
+                        handleUpdate={handleUpdate}
+                      />
+                    </li>
+                  )
+                );
+              })}
             </ul>
             <div className="pt-3 mt-auto flex gap-2 items-center justify-center text-sm flex-wrap shrink-0">
               <Button text="All" click={() => setSelectedStatus("All")} />
