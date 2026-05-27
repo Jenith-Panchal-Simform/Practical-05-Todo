@@ -30,6 +30,6 @@
 
 ## Demo Link
 
-- Demo Link: 
+- Demo Link: https://practical-03-todo.pages.dev/
 - Repository Link: https://github.com/Jenith-Panchal-Simform/Practical-03-Todo
-- Pull Request Link: 
+- Pull Request Link: https://github.com/Jenith-Panchal-Simform/Practical-03-Todo/pull/1
