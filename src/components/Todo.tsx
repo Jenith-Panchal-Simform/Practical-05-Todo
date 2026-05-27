@@ -30,7 +30,9 @@ export type Action =
 
 export const Todo = ({ style }: TodoProps): JSX.Element => {
   const initialState = localStorage.getItem("todos");
-  const data = initialState ? JSON.parse(initialState) : [];
+  const data = useMemo(() => {
+    return initialState ? JSON.parse(initialState) : [];
+  }, [initialState]);
   const [todos, dispatch] = useReducer(reducer, data);
 
   const input = useRef<HTMLInputElement>(null);
@@ -40,6 +42,15 @@ export const Todo = ({ style }: TodoProps): JSX.Element => {
     console.log(todos);
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
+
+  //useeffect to cleanup old date todos
+  useEffect(() => {
+    const today = new Date().toLocaleDateString();
+    const validTodos = data.filter((todo: Todo) => todo.date === today);
+
+    // overwrite localStorage with only valid todos
+    localStorage.setItem("todos", JSON.stringify(validTodos));
+  }, [data]);
 
   const memoizedFilterArray = useMemo(() => {
     if (selectedStatus == "All") return todos;
