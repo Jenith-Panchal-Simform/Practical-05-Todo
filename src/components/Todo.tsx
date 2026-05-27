@@ -13,7 +13,14 @@ export type Todo = {
 
 type Action =
   | { type: "ADD"; payload: { text: string; id: string } }
-  | { type: "UPDATE"; payload: Todo }
+  | {
+      type: "UPDATE";
+      payload: {
+        id?: string;
+        text?: string;
+        status?: "Incomplete" | "Complete";
+      };
+    }
   | { type: "DELETE"; payload: { id: string } };
 
 function reducer(state: Todo[], action: Action): Todo[] {
@@ -69,10 +76,22 @@ export const Todo = ({ style }: TodoProps): JSX.Element => {
     setInput("");
   }
 
-  function handleDelete(todo: Todo) {
-    dispatch({ type: "DELETE", payload: { id: todo.id } });
+  function handleDelete(id: string) {
+    dispatch({ type: "DELETE", payload: { id: id } });
   }
 
+  function handleStatusChange(
+    id: string,
+    currentStatus: "Incomplete" | "Complete",
+  ) {
+    dispatch({
+      type: "UPDATE",
+      payload: {
+        id,
+        status: currentStatus === "Incomplete" ? "Complete" : "Incomplete",
+      },
+    });
+  }
   return (
     <div
       className={`${style ?? ""} flex flex-col gap-3 items-center justify-center bg-gray-100`}
@@ -95,7 +114,13 @@ export const Todo = ({ style }: TodoProps): JSX.Element => {
         <ul className="flex flex-col gap-1.5 overflow-y-auto max-h-[50vh]">
           {todos.map((todo) => (
             <li key={todo.id}>
-              <TodoItem todo={todo} handleDelete={() => handleDelete(todo)} />
+              <TodoItem
+                todo={todo}
+                handleDelete={() => handleDelete(todo.id)}
+                handleStatusChange={() =>
+                  handleStatusChange(todo.id, todo.status)
+                }
+              />
             </li>
           ))}
         </ul>
