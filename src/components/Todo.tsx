@@ -92,6 +92,13 @@ export const Todo = ({ style }: TodoProps): JSX.Element => {
       },
     });
   }
+
+  function handleUpdate(id: string, text: string) {
+    dispatch({
+      type: "UPDATE",
+      payload: { id, text },
+    });
+  }
   return (
     <div
       className={`${style ?? ""} flex flex-col gap-3 items-center justify-center bg-gray-100`}
@@ -120,6 +127,7 @@ export const Todo = ({ style }: TodoProps): JSX.Element => {
                 handleStatusChange={() =>
                   handleStatusChange(todo.id, todo.status)
                 }
+                handleUpdate={handleUpdate}
               />
             </li>
           ))}
