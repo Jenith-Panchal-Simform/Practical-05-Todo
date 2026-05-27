@@ -1,7 +1,8 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useMemo, useReducer, useRef, useState } from "react";
 import type { JSX } from "react/jsx-runtime";
 import TodoItem from "./TodoItem";
 import { Button } from "./Button";
+import { reducer } from "../utils/reducer";
 type TodoProps = {
   style?: string;
 };
@@ -11,7 +12,7 @@ export type Todo = {
   status: "Incomplete" | "Complete";
 };
 
-type Action =
+export type Action =
   | { type: "ADD"; payload: { text: string; id: string } }
   | {
       type: "UPDATE";
@@ -23,57 +24,31 @@ type Action =
     }
   | { type: "DELETE"; payload: { id: string } };
 
-function reducer(state: Todo[], action: Action): Todo[] {
-  console.log(state, action);
-  switch (action.type) {
-    case "ADD": {
-      const newObj: Todo = {
-        id: action.payload.id,
-        text: action.payload.text,
-        status: "Incomplete",
-      };
-      const newTodo = [...state, newObj];
-      return newTodo;
-    }
-    case "DELETE": {
-      return state.filter((todo) => todo.id !== action.payload.id);
-    }
-    case "UPDATE": {
-      return state.map((todo) =>
-        todo.id === action.payload.id
-          ? {
-              ...todo,
-              text: action.payload.text ?? todo.text,
-              status: action.payload.status ?? todo.status,
-            }
-          : todo,
-      );
-    }
-    default:
-      return state;
-  }
-}
-
 export const Todo = ({ style }: TodoProps): JSX.Element => {
   const initialState = localStorage.getItem("todos");
   const data = initialState ? JSON.parse(initialState) : [];
   const [todos, dispatch] = useReducer(reducer, data);
 
-  const [input, setInput] = useState("");
+  const input = useRef<HTMLInputElement>(null);
+  const [selectedStatus, setSelectedStatus] = useState("All");
 
   useEffect(() => {
-    console.log(todos);
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
+  const memoizedFilterArray = useMemo(() => {
+    if (selectedStatus == "All") return todos;
+    return todos.filter((todo) => todo.status == selectedStatus);
+  }, [selectedStatus, todos]);
+
   function handleAddTodo() {
-    console.log(input);
-    if (input === "") return;
-    dispatch({
-      type: "ADD",
-      payload: { text: input, id: crypto.randomUUID() },
-    });
-    setInput("");
+    if (input.current) {
+      dispatch({
+        type: "ADD",
+        payload: { text: input.current.value, id: crypto.randomUUID() },
+      });
+      input.current.value = "";
+    }
   }
 
   function handleDelete(id: string) {
@@ -99,6 +74,7 @@ export const Todo = ({ style }: TodoProps): JSX.Element => {
       payload: { id, text },
     });
   }
+
   return (
     <div
       className={`${style ?? ""} flex flex-col gap-3 items-center justify-center bg-gray-100`}
@@ -106,8 +82,7 @@ export const Todo = ({ style }: TodoProps): JSX.Element => {
       <div className="w-full max-w-lg bg-white shadow-lg rounded-lg flex p-6 justify-between">
         <input
           className="h-full  rounded-sm outline-0"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
+          ref={input}
           placeholder="Create a new task"
         />
         <button
@@ -118,25 +93,37 @@ export const Todo = ({ style }: TodoProps): JSX.Element => {
         </button>
       </div>
       <div className=" w-full max-w-lg bg-white shadow-lg rounded-lg p-4 flex flex-col">
-        <ul className="flex flex-col gap-1.5 overflow-y-auto max-h-[50vh]">
-          {todos.map((todo) => (
-            <li key={todo.id}>
-              <TodoItem
-                todo={todo}
-                handleDelete={() => handleDelete(todo.id)}
-                handleStatusChange={() =>
-                  handleStatusChange(todo.id, todo.status)
-                }
-                handleUpdate={handleUpdate}
+        {memoizedFilterArray.length == 0 ? (
+          <h1>No Todo,Please Add </h1>
+        ) : (
+          <>
+            <ul className="flex flex-col gap-1.5 overflow-y-auto max-h-[50vh]">
+              {memoizedFilterArray.map((todo) => (
+                <li key={todo.id}>
+                  <TodoItem
+                    todo={todo}
+                    handleDelete={() => handleDelete(todo.id)}
+                    handleStatusChange={() =>
+                      handleStatusChange(todo.id, todo.status)
+                    }
+                    handleUpdate={handleUpdate}
+                  />
+                </li>
+              ))}
+            </ul>
+            <div className="mt-3 flex gap-2 items-center justify-center text-sm flex-wrap">
+              <Button text="All" click={() => setSelectedStatus("All")} />
+              <Button
+                text="Completed"
+                click={() => setSelectedStatus("Complete")}
               />
-            </li>
-          ))}
-        </ul>
-        <div className="mt-3 flex gap-2 items-center justify-center text-sm flex-wrap">
-          <Button text="All" />
-          <Button text="Completed" />
-          <Button text="Incomplete" />
-        </div>
+              <Button
+                text="Incomplete"
+                click={() => setSelectedStatus("Incomplete")}
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

@@ -14,7 +14,6 @@ const TodoItem = ({
   handleUpdate,
 }: TodoItemProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
-
   return (
     <div className="flex p-4 justify-between border border-gray-300 rounded-lg">
       <div className="flex gap-2 text-xl font-semibold items-center">
