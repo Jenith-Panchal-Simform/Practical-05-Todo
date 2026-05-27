@@ -3,9 +3,9 @@ import { Todo } from "./components/Todo";
 
 function App() {
   return (
-    <div className="h-screen">
-      <Header style="h-[30%]" />
-      <Todo style="h-[70%]" />
+    <div className="h-screen flex flex-col overflow-hidden">
+      <Header style="flex-[3]" />
+      <Todo style="flex-[7]" />
     </div>
   );
 }

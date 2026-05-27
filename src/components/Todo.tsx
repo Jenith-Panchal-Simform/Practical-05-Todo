@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useReducer, useRef, useState } from "react";
+import { useEffect, useMemo, useReducer, useRef, useState } from "react";
 import type { JSX } from "react/jsx-runtime";
 import TodoItem from "./TodoItem";
 import { Button } from "./Button";
@@ -77,7 +77,7 @@ export const Todo = ({ style }: TodoProps): JSX.Element => {
 
   return (
     <div
-      className={`${style ?? ""} flex flex-col gap-3 items-center justify-center bg-gray-100`}
+      className={`${style ?? ""} flex flex-col gap-3 items-center bg-gray-100 overflow-hidden min-h-0 p-4`}
     >
       <div className="w-full max-w-lg bg-white shadow-lg rounded-lg flex p-6 justify-between">
         <input
@@ -92,12 +92,12 @@ export const Todo = ({ style }: TodoProps): JSX.Element => {
           Add{" "}
         </button>
       </div>
-      <div className=" w-full max-w-lg bg-white shadow-lg rounded-lg p-4 flex flex-col">
+      <div className=" w-full max-w-lg bg-white shadow-lg rounded-lg p-4 flex flex-col flex-1 overflow-hidden min-h-0">
         {memoizedFilterArray.length == 0 ? (
           <h1>No Todo,Please Add </h1>
         ) : (
           <>
-            <ul className="flex flex-col gap-1.5 overflow-y-auto max-h-[50vh]">
+            <ul className="flex flex-col gap-1.5 overflow-y-auto flex-1 min-h-0">
               {memoizedFilterArray.map((todo) => (
                 <li key={todo.id}>
                   <TodoItem
@@ -111,7 +111,7 @@ export const Todo = ({ style }: TodoProps): JSX.Element => {
                 </li>
               ))}
             </ul>
-            <div className="mt-3 flex gap-2 items-center justify-center text-sm flex-wrap">
+            <div className="pt-3 mt-auto flex gap-2 items-center justify-center text-sm flex-wrap shrink-0">
               <Button text="All" click={() => setSelectedStatus("All")} />
               <Button
                 text="Completed"
