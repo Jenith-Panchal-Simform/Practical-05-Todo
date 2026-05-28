@@ -31,6 +31,7 @@ export const EditModal = ({
           value={editText}
           onChange={(e) => setEditText(e.target.value)}
           className="border rounded p-2 w-full"
+          required
         />
         <div className="flex gap-2">
           <button

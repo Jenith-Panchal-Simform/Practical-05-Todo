@@ -103,6 +103,7 @@ export const Todo = ({ style }: TodoProps): JSX.Element => {
           className="h-full  rounded-sm outline-0"
           ref={input}
           placeholder="Create a new task"
+          required
         />
         <button
           className="hover:text-gray-500 cursor-pointer"
