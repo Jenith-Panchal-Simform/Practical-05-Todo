@@ -103,12 +103,11 @@ export const Todo = ({ style }: TodoProps): JSX.Element => {
           placeholder="Create a new task"
           required
         />
-        <button
-          className="hover:text-gray-500 cursor-pointer"
+        <Button
+          text="Add"
           onClick={handleAddTodo}
-        >
-          Add{" "}
-        </button>
+          className="ml-2 bg-blue-500 text-white px-4 py-2 rounded-sm hover:bg-blue-600 transition-colors duration-300"
+        ></Button>
       </div>
       <div className=" w-full max-w-lg bg-white shadow-lg rounded-lg p-4 flex flex-col flex-1 overflow-hidden min-h-0">
         {todos.length == 0 ? (
@@ -135,14 +134,14 @@ export const Todo = ({ style }: TodoProps): JSX.Element => {
               })}
             </ul>
             <div className="pt-3 mt-auto flex gap-2 items-center justify-center text-sm flex-wrap shrink-0">
-              <Button text="All" click={() => setSelectedStatus("All")} />
+              <Button text="All" onClick={() => setSelectedStatus("All")} />
               <Button
                 text="Completed"
-                click={() => setSelectedStatus("Complete")}
+                onClick={() => setSelectedStatus("Complete")}
               />
               <Button
                 text="Incomplete"
-                click={() => setSelectedStatus("Incomplete")}
+                onClick={() => setSelectedStatus("Incomplete")}
               />
             </div>
           </>
