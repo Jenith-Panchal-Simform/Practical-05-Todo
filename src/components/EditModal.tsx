@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import type { Todo } from "./Todo";
 
@@ -12,46 +12,68 @@ export const EditModal = ({
   onSave: (id: string, text: string) => void;
 }) => {
   const [editText, setEditText] = useState(todo.text);
-  const modalRoot = document.getElementById("modal-root") as HTMLElement;
+
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  useEffect(() => {
+    dialogRef.current?.showModal();
+
+    const dialog = dialogRef.current;
+
+    const handleClose = () => {
+      onClose();
+    };
+
+    dialog?.addEventListener("close", handleClose);
+
+    return () => {
+      dialog?.removeEventListener("close", handleClose);
+    };
+  }, [onClose]);
+
+  const handleSave = () => {
+    const trimmedText = editText.trim();
+    if (!trimmedText) return;
+    onSave(todo.id, trimmedText);
+    dialogRef.current?.close();
+  };
 
   return ReactDOM.createPortal(
-    // clicking overlay closes modal
-    <div
-      className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm"
-      onClick={onClose}
+    <dialog
+      ref={dialogRef}
+      className="p-0 rounded
+    fixed top-1/2 left-1/2
+    -translate-x-1/2 -translate-y-1/2
+    backdrop:bg-black/30
+    backdrop:backdrop-blur-sm"
     >
-      {/* prevent overlay close when clicking inside */}
-      <div
-        className="bg-white p-6 rounded shadow-lg relative w-96"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="bg-white p-6 rounded shadow-lg relative w-96">
         <h2 className="text-lg font-bold mb-4">Edit Todo</h2>
+
         <input
           type="text"
           value={editText}
           onChange={(e) => setEditText(e.target.value)}
           className="border rounded p-2 w-full"
-          required
         />
-        <div className="flex gap-2">
+
+        <div className="flex gap-2 mt-4">
           <button
-            onClick={() => {
-              onSave(todo.id, editText);
-              onClose();
-            }}
-            className="mt-4 bg-blue-500 text-white px-4 py-2 rounded cursor-pointer"
+            onClick={handleSave}
+            className="bg-blue-500 text-white px-4 py-2 rounded cursor-pointer"
           >
             Save
           </button>
+
           <button
-            onClick={onClose}
-            className="mt-2 text-gray-600 cursor-pointer"
+            onClick={() => dialogRef.current?.close()}
+            className="text-gray-600 cursor-pointer"
           >
             Cancel
           </button>
         </div>
       </div>
-    </div>,
-    modalRoot,
+    </dialog>,
+    document.body,
   );
 };
