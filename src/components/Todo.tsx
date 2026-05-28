@@ -91,9 +91,7 @@ export const Todo = ({ style }: TodoProps): JSX.Element => {
         payload: { id, text },
       });
   }
-  const today = new Date().toLocaleDateString();
 
-  const todayTodos = memoizedFilterArray.filter((todo) => todo.date === today);
   return (
     <div
       className={`${style ?? ""} flex flex-col gap-3 items-center bg-gray-100 overflow-hidden min-h-0 p-4`}
@@ -113,23 +111,26 @@ export const Todo = ({ style }: TodoProps): JSX.Element => {
         </button>
       </div>
       <div className=" w-full max-w-lg bg-white shadow-lg rounded-lg p-4 flex flex-col flex-1 overflow-hidden min-h-0">
-        {todayTodos.length == 0 ? (
+        {todos.length == 0 ? (
           <h1>No Todo,Please Add </h1>
         ) : (
           <>
             <ul className="flex flex-col gap-1.5 overflow-y-auto flex-1 min-h-0">
-              {todayTodos.map((todo) => {
+              {memoizedFilterArray.map((todo) => {
+                const today = new Date().toLocaleDateString();
                 return (
-                  <li key={todo.id}>
-                    <TodoItem
-                      todo={todo}
-                      handleDelete={() => handleDelete(todo.id)}
-                      handleStatusChange={() =>
-                        handleStatusChange(todo.id, todo.status)
-                      }
-                      handleUpdate={handleUpdate}
-                    />
-                  </li>
+                  todo.date === today && (
+                    <li key={todo.id}>
+                      <TodoItem
+                        todo={todo}
+                        handleDelete={() => handleDelete(todo.id)}
+                        handleStatusChange={() =>
+                          handleStatusChange(todo.id, todo.status)
+                        }
+                        handleUpdate={handleUpdate}
+                      />
+                    </li>
+                  )
                 );
               })}
             </ul>
