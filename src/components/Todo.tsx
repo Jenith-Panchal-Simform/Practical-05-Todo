@@ -98,7 +98,7 @@ export const Todo = ({ style }: TodoProps): JSX.Element => {
     >
       <div className="w-full max-w-lg bg-white shadow-lg rounded-lg flex p-6 justify-between">
         <input
-          className="h-full  rounded-sm outline-0"
+          className="h-full w-full rounded-sm outline-0 pr-1"
           ref={input}
           placeholder="Create a new task"
           required
