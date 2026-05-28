@@ -3,9 +3,7 @@ import type { JSX } from "react/jsx-runtime";
 import TodoItem from "./TodoItem";
 import { Button } from "./Button";
 import { reducer } from "../utils/reducer";
-type TodoProps = {
-  style?: string;
-};
+
 export type Todo = {
   id: string;
   text: string;
@@ -19,38 +17,36 @@ export type Action =
   | {
       type: "UPDATE";
       payload: {
-        id?: string;
+        id: string;
         text?: string;
         status?: "Incomplete" | "Complete";
-        date?: string;
         time?: string;
       };
     }
   | { type: "DELETE"; payload: { id: string } };
 
-export const Todo = ({ style }: TodoProps): JSX.Element => {
-  const initialState = localStorage.getItem("todos");
-  const data = useMemo(() => {
-    return initialState ? JSON.parse(initialState) : [];
-  }, [initialState]);
-  const [todos, dispatch] = useReducer(reducer, data);
+export const Todos = (): JSX.Element => {
+  const data = localStorage.getItem("todos");
+  const initialState = useMemo(() => {
+    return data ? JSON.parse(data) : [];
+  }, [data]);
+  const [todos, dispatch] = useReducer(reducer, initialState);
 
   const input = useRef<HTMLInputElement>(null);
   const [selectedStatus, setSelectedStatus] = useState("All");
 
   useEffect(() => {
-    console.log(todos);
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
   //useeffect to cleanup old date todos
   useEffect(() => {
     const today = new Date().toLocaleDateString();
-    const validTodos = data.filter((todo: Todo) => todo.date === today);
+    const validTodos = initialState.filter((todo: Todo) => todo.date === today);
 
     // overwrite localStorage with only valid todos
     localStorage.setItem("todos", JSON.stringify(validTodos));
-  }, [data]);
+  }, [initialState]);
 
   const memoizedFilterArray = useMemo(() => {
     if (selectedStatus == "All") return todos;
@@ -93,9 +89,7 @@ export const Todo = ({ style }: TodoProps): JSX.Element => {
   }
 
   return (
-    <div
-      className={`${style ?? ""} flex flex-col gap-3 items-center bg-gray-100 overflow-hidden min-h-0 p-4`}
-    >
+    <div className=" flex-[7] flex flex-col gap-3 items-center bg-gray-100 overflow-hidden min-h-0 p-4">
       <div className="w-full max-w-lg bg-white shadow-lg rounded-lg flex p-6 justify-between">
         <input
           className="h-full w-full rounded-sm outline-0 pr-1"

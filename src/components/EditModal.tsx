@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
-import type { Todo } from "./Todo";
+import type { Todo } from "./Todos";
 
 export const EditModal = ({
   todo,

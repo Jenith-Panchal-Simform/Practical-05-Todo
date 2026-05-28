@@ -1,5 +1,5 @@
 import { useState, type JSX } from "react";
-import type { Todo } from "./Todo";
+import type { Todo } from "./Todos";
 import { EditModal } from "./EditModal";
 type TodoItemProps = {
   todo: Todo;

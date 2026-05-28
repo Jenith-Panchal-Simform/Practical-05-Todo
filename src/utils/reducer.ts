@@ -1,4 +1,4 @@
-import type { Action, Todo } from "../components/Todo";
+import type { Action, Todo } from "../components/Todos";
 
 export function reducer(state: Todo[], action: Action): Todo[] {
   switch (action.type) {
@@ -23,7 +23,6 @@ export function reducer(state: Todo[], action: Action): Todo[] {
               ...todo,
               text: action.payload.text ?? todo.text,
               status: action.payload.status ?? todo.status,
-              date: new Date().toLocaleDateString(),
               time: new Date().toLocaleTimeString(),
             }
           : todo,

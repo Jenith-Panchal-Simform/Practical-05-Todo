@@ -1,11 +1,11 @@
 import { Header } from "./components/Header";
-import { Todo } from "./components/Todo";
+import { Todos } from "./components/Todos";
 
 function App() {
   return (
     <div className="h-screen flex flex-col overflow-hidden">
-      <Header style="flex-[3]" />
-      <Todo style="flex-[7]" />
+      <Header />
+      <Todos />
     </div>
   );
 }

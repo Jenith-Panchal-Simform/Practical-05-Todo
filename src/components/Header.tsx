@@ -1,12 +1,10 @@
 import { type JSX } from "react";
-type HeaderProps = {
-  style?: string;
-};
-export const Header = ({ style }: HeaderProps): JSX.Element => {
+
+export const Header = (): JSX.Element => {
   return (
-    <div
-      className={`bg-center bg-no-repeat bg-cover ${style ?? ""} overflow-hidden`}
+    <header
+      className="bg-center bg-no-repeat bg-cover flex-[3] overflow-hidden"
       style={{ backgroundImage: "url('/background.jpg')" }}
-    ></div>
+    ></header>
   );
 };
