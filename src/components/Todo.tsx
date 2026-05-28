@@ -58,10 +58,10 @@ export const Todo = ({ style }: TodoProps): JSX.Element => {
   }, [selectedStatus, todos]);
 
   function handleAddTodo() {
-    if (input.current && input.current.value !== "") {
+    if (input.current && input.current.value.trim() !== "") {
       dispatch({
         type: "ADD",
-        payload: { text: input.current.value, id: crypto.randomUUID() },
+        payload: { text: input.current.value.trim(), id: crypto.randomUUID() },
       });
       input.current.value = "";
     }
@@ -85,7 +85,7 @@ export const Todo = ({ style }: TodoProps): JSX.Element => {
   }
 
   function handleUpdate(id: string, text: string) {
-    if (text)
+    if (text && text.trim() !== "")
       dispatch({
         type: "UPDATE",
         payload: { id, text },
