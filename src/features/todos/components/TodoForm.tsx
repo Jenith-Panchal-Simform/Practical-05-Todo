@@ -1,6 +1,6 @@
 import { memo, useRef } from "react";
-import type { Action } from "./Todos";
 import { Button } from "../../../components/Button";
+import type { Action } from "../types/todo.types";
 type TodoFormProps = {
   dispatch: React.Dispatch<Action>;
 };
