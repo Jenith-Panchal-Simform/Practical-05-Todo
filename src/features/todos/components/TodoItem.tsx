@@ -37,61 +37,69 @@ const TodoItem = ({ todo }: TodoItemProps): JSX.Element => {
   }
 
   return (
-    <div className="flex p-4 justify-between border border-gray-300 rounded-lg w-full overflow-hidden">
-      <div className="flex gap-2 text-xl font-semibold items-center flex-1 min-w-0 ">
+    <div className="flex flex-col gap-3 p-4 border border-gray-300 rounded-lg w-full overflow-hidden">
+      {/* top section */}
+      <div className="flex gap-2 text-xl font-semibold items-start">
         <input
           type="checkbox"
           onChange={() => handleStatusChange(todo.id, todo.status)}
           id={todo.id}
           checked={todo.status === "Complete"}
           name="task"
-          className="appearance-none w-4 h-4 shrink-0 border border-gray-400 rounded-full checked:bg-gray-600 checked:border-gray-700 transition duration-200"
+          className="mt-1 appearance-none w-4 h-4 shrink-0 border border-gray-400 rounded-full checked:bg-gray-600 checked:border-gray-700 transition duration-200"
         />
-        <div className="flex items-center gap-2 overflow-x-auto whitespace-nowrap min-w-0">
+        <div className="flex-1 min-w-0">
           <label
             htmlFor="task1"
-            className={`ml-2 flex-2 ${todo.status === "Complete" ? "line-through text-gray-500" : ""}`}
+            className={`text-lg wrap-break-word ${todo.status === "Complete" ? "line-through text-gray-500" : ""}`}
           >
             {todo.text}
           </label>
+        </div>
+      </div>
+
+      {/* bottom section */}
+      <div className="flex items-center justify-between flex-wrap gap-2">
+        <div className="flex gap-2 flex-wrap overflow-hidden">
           <span
-            className={`ml-3 px-2 py-0.5 text-xs font-medium rounded-full ${todo.status === "Complete" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}
+            className={`px-2 py-0.5 text-xs font-medium rounded-full whitespace-nowrap shrink-0 ${todo.status === "Complete" ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}
           >
             {todo.status}
           </span>
           <span
-            className={`ml-3 px-2 py-0.5 text-xs font-medium rounded-full bg-gray-500 text-gray-100`}
+            className={` px-2 py-0.5 text-xs font-medium rounded-full whitespace-nowrap shrink-0 bg-gray-500 text-gray-100`}
           >
             {todo.date}
           </span>
           <span
-            className={`ml-3 px-2 py-0.5 text-xs font-medium rounded-full bg-gray-500 text-gray-100`}
+            className={` px-2 py-0.5 text-xs font-medium rounded-full whitespace-nowrap shrink-0 bg-gray-500 text-gray-100`}
           >
             {todo.time}
           </span>
         </div>
+        <div className="flex gap-2 shrink-0 ml-3">
+          <button
+            className="w-8 h-8 flex items-center justify-center text-xl font-semibold cursor-pointer "
+            onClick={() => setIsEditing(true)}
+          >
+            ✎
+          </button>
+
+          <button
+            className=" w-8 h-8 flex items-center justify-centertext-sm font-light cursor-pointer"
+            onClick={() => handleDelete(todo.id)}
+          >
+            ✖
+          </button>
+        </div>
       </div>
-      <div className="flex gap-1 shrink-0 ml-3">
-        <button
-          className="text-xl font-semibold cursor-pointer"
-          onClick={() => setIsEditing(true)}
-        >
-          ✎
-        </button>
-        {isEditing && (
-          <EditModal
-            todo={todo}
-            onClose={() => setIsEditing(false)}
-            onSave={handleUpdate}
-          />
-        )}
-        <button
-          className="text-sm font-light cursor-pointer"
-          onClick={() => handleDelete(todo.id)}
-        >
-          ✖
-        </button>
-      </div>
+      {isEditing && (
+        <EditModal
+          todo={todo}
+          onClose={() => setIsEditing(false)}
+          onSave={handleUpdate}
+        />
+      )}
     </div>
   );
 };

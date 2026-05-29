@@ -11,14 +11,14 @@ export const Button = ({
 }: ButtonProps): JSX.Element => {
   return (
     <button
-      className={`${className ?? ""}     cursor-pointer
+      className={`${className}     cursor-pointer
     transition 
     duration-300 
     ease-in-out
     px-2
     py-1
     rounded-sm
-    hover:bg-gray-500  
+    hover:bg-gray-600  
     hover:text-white 
     hover:scale-105 
     hover:shadow-lg `}

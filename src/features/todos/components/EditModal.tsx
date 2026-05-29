@@ -33,7 +33,11 @@ export const EditModal = ({
 
   const handleSave = () => {
     const trimmedText = editText.trim();
-    if (!trimmedText) return;
+    if (!trimmedText) {
+      alert("Empty Todo,Please Add Some Task");
+      onClose();
+      return;
+    }
     onSave(todo.id, trimmedText);
     dialogRef.current?.close();
   };
