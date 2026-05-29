@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useReducer, useRef, useState } from "react";
+import { useEffect, useMemo, useReducer, useState } from "react";
 import type { JSX } from "react/jsx-runtime";
 import TodoItem from "./TodoItem";
 import { Button } from "./Button";
 import { reducer } from "../utils/reducer";
+import { TodoForm } from "./TodoForm";
 
 export type Todo = {
     id: string;
@@ -31,7 +32,6 @@ function init() {
 export const Todos = (): JSX.Element => {
     const [todos, dispatch] = useReducer(reducer, [], init);
 
-    const input = useRef<HTMLInputElement>(null);
     const [selectedStatus, setSelectedStatus] = useState("All");
 
     useEffect(() => {
@@ -52,18 +52,7 @@ export const Todos = (): JSX.Element => {
         return todos.filter((todo) => todo.status == selectedStatus);
     }, [selectedStatus, todos]);
 
-    function handleAddTodo() {
-        if (input.current && input.current.value.trim() !== "") {
-            dispatch({
-                type: "ADD",
-                payload: {
-                    text: input.current.value.trim(),
-                    id: crypto.randomUUID(),
-                },
-            });
-            input.current.value = "";
-        }
-    }
+    
 
     function handleDelete(id: string) {
         dispatch({ type: "DELETE", payload: { id: id } });
@@ -93,19 +82,7 @@ export const Todos = (): JSX.Element => {
 
     return (
         <div className=" flex-[7] flex flex-col gap-3 items-center bg-gray-100 overflow-hidden min-h-0 p-4">
-            <div className="w-full max-w-lg bg-white shadow-lg rounded-lg flex p-6 justify-between">
-                <input
-                    className="h-full w-full rounded-sm outline-0 pr-1"
-                    ref={input}
-                    placeholder="Create a new task"
-                    required
-                />
-                <Button
-                    text="Add"
-                    onClick={handleAddTodo}
-                    className="ml-2 bg-blue-500 text-white px-4 py-2 rounded-sm hover:bg-blue-600 transition-colors duration-300"
-                ></Button>
-            </div>
+            <TodoForm dispatch={dispatch}/>
             <div className=" w-full max-w-lg bg-white shadow-lg rounded-lg p-4 flex flex-col flex-1 overflow-hidden min-h-0">
                 {todos.length == 0 ? (
                     <h1>No Todo,Please Add </h1>
