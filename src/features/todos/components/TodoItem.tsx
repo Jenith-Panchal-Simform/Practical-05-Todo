@@ -1,26 +1,47 @@
 import { useState, type JSX } from "react";
 import { EditModal } from "./EditModal";
 import type { Todo } from "../types/todo.types";
+import { useTodo } from "../hooks/useTodo";
 
 type TodoItemProps = {
   todo: Todo;
-  handleDelete: () => void;
-  handleStatusChange: () => void;
-  handleUpdate: (id: string, text: string) => void;
 };
-const TodoItem = ({
-  todo,
-  handleDelete,
-  handleStatusChange,
-  handleUpdate,
-}: TodoItemProps): JSX.Element => {
+const TodoItem = ({ todo }: TodoItemProps): JSX.Element => {
   const [isEditing, setIsEditing] = useState(false);
+
+  const { dispatch } = useTodo();
+
+  function handleDelete(id: string) {
+    dispatch({ type: "DELETE", payload: { id: id } });
+  }
+
+  function handleStatusChange(
+    id: string,
+    currentStatus: "Incomplete" | "Complete",
+  ) {
+    dispatch({
+      type: "UPDATE",
+      payload: {
+        id,
+        status: currentStatus === "Incomplete" ? "Complete" : "Incomplete",
+      },
+    });
+  }
+
+  function handleUpdate(id: string, text: string) {
+    if (text && text.trim() !== "")
+      dispatch({
+        type: "UPDATE",
+        payload: { id, text },
+      });
+  }
+
   return (
     <div className="flex p-4 justify-between border border-gray-300 rounded-lg w-full overflow-hidden">
       <div className="flex gap-2 text-xl font-semibold items-center flex-1 min-w-0 ">
         <input
           type="checkbox"
-          onChange={handleStatusChange}
+          onChange={() => handleStatusChange(todo.id, todo.status)}
           id={todo.id}
           checked={todo.status === "Complete"}
           name="task"
@@ -66,7 +87,7 @@ const TodoItem = ({
         )}
         <button
           className="text-sm font-light cursor-pointer"
-          onClick={handleDelete}
+          onClick={() => handleDelete(todo.id)}
         >
           ✖
         </button>

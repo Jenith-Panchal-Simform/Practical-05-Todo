@@ -1,11 +1,11 @@
-import { memo, useRef } from "react";
+import { useRef } from "react";
 import { Button } from "../../../components/Button";
-import type { Action } from "../types/todo.types";
-type TodoFormProps = {
-  dispatch: React.Dispatch<Action>;
-};
-export const TodoForm = memo(({ dispatch }: TodoFormProps) => {
+import { useTodo } from "../hooks/useTodo";
+
+export const TodoForm = () => {
   const input = useRef<HTMLInputElement>(null);
+  const { dispatch } = useTodo();
+
   function handleAddTodo() {
     if (input.current && input.current.value.trim() !== "") {
       dispatch({
@@ -33,4 +33,4 @@ export const TodoForm = memo(({ dispatch }: TodoFormProps) => {
       ></Button>
     </div>
   );
-});
+};
