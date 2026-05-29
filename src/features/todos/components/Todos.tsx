@@ -88,7 +88,10 @@ export const Todos = (): JSX.Element => {
                 );
               })}
             </ul>
-            <TodoFilters setSelectedStatus={setSelectedStatus} />
+            <TodoFilters
+              selectedStatus={selectedStatus}
+              setSelectedStatus={setSelectedStatus}
+            />
           </>
         )}
       </div>
