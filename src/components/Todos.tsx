@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useReducer, useState } from "react";
 import type { JSX } from "react/jsx-runtime";
 import TodoItem from "./TodoItem";
-import { Button } from "./Button";
 import { reducer } from "../utils/reducer";
 import { TodoForm } from "./TodoForm";
+import { TodoFilters } from "./TodoFilters";
+import { filterTodos } from "../utils/filterTodo";
 
 export type Todo = {
     id: string;
@@ -47,12 +48,10 @@ export const Todos = (): JSX.Element => {
         localStorage.setItem("todos", JSON.stringify(validTodos));
     }, [todos]);
 
-    const memoizedFilterArray = useMemo(() => {
-        if (selectedStatus == "All") return todos;
-        return todos.filter((todo) => todo.status == selectedStatus);
-    }, [selectedStatus, todos]);
-
-    
+    const filteredTodos = useMemo(
+        () => filterTodos(todos, selectedStatus),
+        [todos, selectedStatus],
+    );
 
     function handleDelete(id: string) {
         dispatch({ type: "DELETE", payload: { id: id } });
@@ -82,14 +81,14 @@ export const Todos = (): JSX.Element => {
 
     return (
         <div className=" flex-[7] flex flex-col gap-3 items-center bg-gray-100 overflow-hidden min-h-0 p-4">
-            <TodoForm dispatch={dispatch}/>
+            <TodoForm dispatch={dispatch} />
             <div className=" w-full max-w-lg bg-white shadow-lg rounded-lg p-4 flex flex-col flex-1 overflow-hidden min-h-0">
                 {todos.length == 0 ? (
                     <h1>No Todo,Please Add </h1>
                 ) : (
                     <>
                         <ul className="flex flex-col gap-1.5 overflow-y-auto flex-1 min-h-0">
-                            {memoizedFilterArray.map((todo) => {
+                            {filteredTodos.map((todo) => {
                                 const today = new Date().toLocaleDateString();
                                 return (
                                     todo.date === today && (
@@ -112,20 +111,7 @@ export const Todos = (): JSX.Element => {
                                 );
                             })}
                         </ul>
-                        <div className="pt-3 mt-auto flex gap-2 items-center justify-center text-sm flex-wrap shrink-0">
-                            <Button
-                                text="All"
-                                onClick={() => setSelectedStatus("All")}
-                            />
-                            <Button
-                                text="Completed"
-                                onClick={() => setSelectedStatus("Complete")}
-                            />
-                            <Button
-                                text="Incomplete"
-                                onClick={() => setSelectedStatus("Incomplete")}
-                            />
-                        </div>
+                        <TodoFilters setSelectedStatus={setSelectedStatus} />
                     </>
                 )}
             </div>
