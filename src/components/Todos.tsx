@@ -28,7 +28,12 @@ export type Action =
     | { type: "DELETE"; payload: { id: string } };
 function init() {
     const data = localStorage.getItem("todos");
-    return data ? JSON.parse(data) : [];
+    if (!data) return [];
+
+    //after getting data filter and remove todos which are not having today's date
+    const todos: Todo[] = JSON.parse(data);
+    const today = new Date().toLocaleDateString();
+    return todos.filter((todo) => todo.date === today);
 }
 export const Todos = (): JSX.Element => {
     const [todos, dispatch] = useReducer(reducer, [], init);
@@ -37,15 +42,6 @@ export const Todos = (): JSX.Element => {
 
     useEffect(() => {
         localStorage.setItem("todos", JSON.stringify(todos));
-    }, [todos]);
-
-    //useeffect to cleanup old date todos
-    useEffect(() => {
-        const today = new Date().toLocaleDateString();
-        const validTodos = todos.filter((todo: Todo) => todo.date === today);
-
-        // overwrite localStorage with only valid todos
-        localStorage.setItem("todos", JSON.stringify(validTodos));
     }, [todos]);
 
     const filteredTodos = useMemo(
