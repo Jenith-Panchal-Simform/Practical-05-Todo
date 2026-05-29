@@ -20,7 +20,7 @@ export const Todos = (): JSX.Element => {
   );
 
   return (
-    <div className=" flex-[7] flex flex-col gap-3 items-center bg-gray-100 overflow-hidden min-h-0 p-4">
+    <div className=" flex-7 flex flex-col gap-3 items-center bg-gray-100 overflow-hidden min-h-0 p-4">
       <TodoForm />
       <div className=" w-full max-w-lg bg-white shadow-lg rounded-lg p-4 flex flex-col flex-1 overflow-hidden min-h-0">
         {todos.length == 0 ? (
