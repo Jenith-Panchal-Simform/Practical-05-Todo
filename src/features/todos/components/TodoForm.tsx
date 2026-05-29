@@ -7,16 +7,19 @@ type TodoFormProps = {
 export const TodoForm = memo(({ dispatch }: TodoFormProps) => {
   const input = useRef<HTMLInputElement>(null);
   function handleAddTodo() {
-    if (input.current && input.current.value.trim() !== "") {
-      dispatch({
-        type: "ADD",
-        payload: {
-          text: input.current.value.trim(),
-          id: crypto.randomUUID(),
-        },
-      });
-      input.current.value = "";
+    const inputText = input.current?.value.trim();
+    if (!inputText) {
+      alert("Empty Todo, Please Add some Task");
+      return;
     }
+    dispatch({
+      type: "ADD",
+      payload: {
+        text: inputText,
+        id: crypto.randomUUID(),
+      },
+    });
+    if (input.current) input.current.value = "";
   }
   return (
     <div className="w-full max-w-lg bg-white shadow-lg rounded-lg flex p-6 justify-between">

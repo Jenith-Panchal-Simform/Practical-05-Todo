@@ -48,11 +48,17 @@ export const Todos = (): JSX.Element => {
   }
 
   function handleUpdate(id: string, text: string) {
-    if (text && text.trim() !== "")
-      dispatch({
-        type: "UPDATE",
-        payload: { id, text },
-      });
+    const inputText = text.trim();
+
+    if (inputText === "") {
+      alert("Empty Todo, Please Add some Task");
+      return;
+    }
+
+    dispatch({
+      type: "UPDATE",
+      payload: { id, text: inputText },
+    });
   }
 
   return (
