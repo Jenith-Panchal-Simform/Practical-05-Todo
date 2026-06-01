@@ -9,32 +9,7 @@ type TodoItemProps = {
 const TodoItem = ({ todo }: TodoItemProps): JSX.Element => {
   const [isEditing, setIsEditing] = useState(false);
 
-  const { dispatch } = useTodo();
-
-  function handleDelete(id: string) {
-    dispatch({ type: "DELETE", payload: { id: id } });
-  }
-
-  function handleStatusChange(
-    id: string,
-    currentStatus: "Incomplete" | "Complete",
-  ) {
-    dispatch({
-      type: "UPDATE",
-      payload: {
-        id,
-        status: currentStatus === "Incomplete" ? "Complete" : "Incomplete",
-      },
-    });
-  }
-
-  function handleUpdate(id: string, text: string) {
-    if (text && text.trim() !== "")
-      dispatch({
-        type: "UPDATE",
-        payload: { id, text },
-      });
-  }
+  const { handleDelete, handleStatusChange, handleUpdate } = useTodo();
 
   return (
     <div className="flex flex-col gap-3 p-4 border border-gray-300 rounded-lg w-full overflow-hidden">

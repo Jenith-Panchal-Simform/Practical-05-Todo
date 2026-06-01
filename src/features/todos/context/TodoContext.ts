@@ -1,10 +1,5 @@
 import { createContext } from "react";
-import type { Todo, Action } from "../types/todo.types";
-
-export type TodoContextType = {
-  todos: Todo[];
-  dispatch: React.Dispatch<Action>;
-};
+import type { TodoContextType } from "../types/todo.types";
 
 export const TodoContext = createContext<TodoContextType | undefined>(
   undefined,

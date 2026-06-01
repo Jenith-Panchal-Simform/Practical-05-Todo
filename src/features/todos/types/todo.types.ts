@@ -18,3 +18,14 @@ export type Action =
       };
     }
   | { type: "DELETE"; payload: { id: string } };
+
+export type TodoContextType = {
+  todos: Todo[];
+  dispatch: React.Dispatch<Action>;
+  handleDelete: (id: string) => void;
+  handleStatusChange: (
+    id: string,
+    currentStatus: "Incomplete" | "Complete",
+  ) => void;
+  handleUpdate: (id: string, text: string) => void;
+};
