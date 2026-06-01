@@ -14,7 +14,7 @@
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/Jenith-Panchal-Simform/Practical-03-Todo.git
+   git clone https://github.com/Jenith-Panchal-Simform/Practical-05-Todo.git
    cd Practical-03-Todo
    ```
 2. **Install Dependencies**
@@ -30,6 +30,6 @@
 
 ## Demo Link
 
-- Demo Link: https://practical-05-todo.pages.dev/
-- Repository Link: https://github.com/Jenith-Panchal-Simform/Practical-05-Todo
-- Pull Request Link: https://github.com/Jenith-Panchal-Simform/Practical-05-Todo/pull/1
+- Demo Link: https://refactor-context-logic.practical-05-todo.pages.dev/
+- Repository Link: https://github.com/Jenith-Panchal-Simform/Practical-05-Todo/tree/refactor/context-logic
+- Pull Request Link: https://github.com/Jenith-Panchal-Simform/Practical-05-Todo/pull/2
