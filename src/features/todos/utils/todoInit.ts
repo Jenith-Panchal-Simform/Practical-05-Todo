@@ -1,11 +1,8 @@
-import type { Todo } from "../types/todo.types";
+import { filterTodaysTodos } from "./filterTodaysTodo";
 
-export function init() {
+export function loadTodosFromStorage() {
   const data = localStorage.getItem("todos");
   if (!data) return [];
 
-  //after getting data filter and remove todos which are not having today's date
-  const todos: Todo[] = JSON.parse(data);
-  const today = new Date().toLocaleDateString();
-  return todos.filter((todo) => todo.date === today);
+  return filterTodaysTodos(JSON.parse(data));
 }

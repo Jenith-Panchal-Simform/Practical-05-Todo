@@ -1,6 +1,6 @@
 import { useEffect, useReducer, type ReactNode } from "react";
 import { reducer } from "../utils/reducer";
-import { init } from "../utils/todoInit";
+import { loadTodosFromStorage } from "../utils/todoInit";
 import { TodoContext } from "./TodoContext";
 
 type TodoProviderProps = {
@@ -8,7 +8,7 @@ type TodoProviderProps = {
 };
 
 export const TodoProvider = ({ children }: TodoProviderProps) => {
-  const [todos, dispatch] = useReducer(reducer, [], init);
+  const [todos, dispatch] = useReducer(reducer, [], loadTodosFromStorage);
 
   function handleDelete(id: string) {
     dispatch({ type: "DELETE", payload: { id: id } });

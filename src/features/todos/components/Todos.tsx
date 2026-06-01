@@ -4,13 +4,14 @@ import { TodoForm } from "./TodoForm";
 import { filterTodos } from "../utils/filterTodo";
 import { useTodo } from "../hooks/useTodo";
 import TodoListPanel from "./TodoListPanel";
+import { filterTodaysTodos } from "../utils/filterTodaysTodo";
 
 export const Todos = (): JSX.Element => {
   const { todos } = useTodo();
   const [selectedStatus, setSelectedStatus] = useState("All");
 
   const filteredTodos = useMemo(
-    () => filterTodos(todos, selectedStatus),
+    () => filterTodaysTodos(filterTodos(todos, selectedStatus)),
     [todos, selectedStatus],
   );
 
