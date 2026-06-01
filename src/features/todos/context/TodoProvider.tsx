@@ -1,4 +1,4 @@
-import { useReducer, type ReactNode } from "react";
+import { useEffect, useReducer, type ReactNode } from "react";
 import { reducer } from "../utils/reducer";
 import { init } from "../utils/todoInit";
 import { TodoContext } from "./TodoContext";
@@ -34,6 +34,10 @@ export const TodoProvider = ({ children }: TodoProviderProps) => {
         payload: { id, text },
       });
   }
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   return (
     <TodoContext.Provider
