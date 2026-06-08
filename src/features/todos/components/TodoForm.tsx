@@ -15,7 +15,7 @@ export const TodoForm = () => {
     dispatch({
       type: "ADD",
       payload: {
-        text: inputText,
+        title: inputText,
         id: crypto.randomUUID(),
       },
     });

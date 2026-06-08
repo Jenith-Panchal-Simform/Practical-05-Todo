@@ -9,7 +9,7 @@ export const TodoFilters = ({
   setSelectedStatus,
 }: TodoFiltersProps) => {
   return (
-    <div className="pt-3 mt-auto flex gap-2 items-center justify-center text-sm flex-wrap shrink-0">
+    <div className="pt-3 mb-10 flex gap-2 items-center justify-center text-sm flex-wrap shrink-0">
       <Button
         text="All"
         onClick={() => setSelectedStatus("All")}

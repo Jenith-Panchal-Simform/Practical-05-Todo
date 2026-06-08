@@ -1,15 +1,15 @@
 import { Header } from "./components/Header";
 import { Todos } from "./features/todos/components/Todos";
-import { TodoProvider } from "./features/todos/context/TodoProvider";
+import { TodosProvider } from "./features/todos/context/TodosProvider";
 
 function App() {
   return (
-    <TodoProvider>
-      <div className="h-screen flex flex-col overflow-hidden">
-        <Header />
+    <div className="h-screen flex flex-col overflow-hidden">
+      <Header />
+      <TodosProvider>
         <Todos />
-      </div>
-    </TodoProvider>
+      </TodosProvider>
+    </div>
   );
 }
 export default App;

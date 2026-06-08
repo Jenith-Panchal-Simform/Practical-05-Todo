@@ -11,7 +11,7 @@ export const EditModal = ({
   onClose: () => void;
   onSave: (id: string, text: string) => void;
 }) => {
-  const [editText, setEditText] = useState(todo.text);
+  const [editText, setEditText] = useState(todo.title);
 
   const dialogRef = useRef<HTMLDialogElement>(null);
 

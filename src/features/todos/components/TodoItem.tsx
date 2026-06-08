@@ -8,7 +8,6 @@ type TodoItemProps = {
 };
 const TodoItem = ({ todo }: TodoItemProps): JSX.Element => {
   const [isEditing, setIsEditing] = useState(false);
-
   const { handleDelete, handleStatusChange, handleUpdate } = useTodo();
 
   return (
@@ -28,7 +27,7 @@ const TodoItem = ({ todo }: TodoItemProps): JSX.Element => {
             htmlFor="task1"
             className={`text-lg wrap-break-word ${todo.status === "Complete" ? "line-through text-gray-500" : ""}`}
           >
-            {todo.text}
+            {todo.title}
           </label>
         </div>
       </div>
@@ -45,11 +44,6 @@ const TodoItem = ({ todo }: TodoItemProps): JSX.Element => {
             className={` px-2 py-0.5 text-xs font-medium rounded-full whitespace-nowrap shrink-0 bg-gray-500 text-gray-100`}
           >
             {todo.date}
-          </span>
-          <span
-            className={` px-2 py-0.5 text-xs font-medium rounded-full whitespace-nowrap shrink-0 bg-gray-500 text-gray-100`}
-          >
-            {todo.time}
           </span>
         </div>
         <div className="flex gap-2 shrink-0 ml-3">
