@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import type { Todo } from "../types/todo.types";
+import { useTheme } from "../hooks/useTheme";
 
 export const EditModal = ({
   todo,
@@ -42,6 +43,8 @@ export const EditModal = ({
     dialogRef.current?.close();
   };
 
+  const [theme] = useTheme();
+
   return ReactDOM.createPortal(
     <dialog
       ref={dialogRef}
@@ -51,7 +54,9 @@ export const EditModal = ({
     backdrop:bg-black/30
     backdrop:backdrop-blur-sm"
     >
-      <div className="bg-white p-6 rounded shadow-lg relative w-96">
+      <div
+        className={` p-6 rounded shadow-lg relative w-96 ${theme === "dark" ? "bg-gray-700 text-white" : "bg-white"}`}
+      >
         <h2 className="text-lg font-bold mb-4">Edit Todo</h2>
 
         <input
@@ -71,7 +76,7 @@ export const EditModal = ({
 
           <button
             onClick={() => dialogRef.current?.close()}
-            className="text-gray-600 cursor-pointer"
+            className="text-red-600 cursor-pointer"
           >
             Cancel
           </button>
