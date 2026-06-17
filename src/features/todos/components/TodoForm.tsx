@@ -1,14 +1,16 @@
 import { useRef } from "react";
+
 import { Button } from "../../../components/Button";
+
 import { useTodo } from "../hooks/useTodo";
-import { useTheme } from "../hooks/useTheme";
+import { useTheme } from "../context/ThemeContext";
 
 export const TodoForm = () => {
   const input = useRef<HTMLInputElement>(null);
 
   const { dispatch } = useTodo();
 
-  const [theme] = useTheme();
+  const { theme } = useTheme();
 
   function handleAddTodo() {
     const inputText = input.current?.value.trim();
@@ -30,7 +32,7 @@ export const TodoForm = () => {
       className={`w-full max-w-lg shadow-lg rounded-lg flex p-6 justify-between ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white"}`}
     >
       <input
-        className="h-full w-full rounded-sm outline-0 pr-1"
+        className="h-full w-full rounded-sm outline-0 pr-1 placeholder-gray-400"
         ref={input}
         placeholder="Create a new task"
         required

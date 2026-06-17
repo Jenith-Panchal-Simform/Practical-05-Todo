@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
+
 import type { Todo } from "../types/todo.types";
-import { useTheme } from "../hooks/useTheme";
+import { useTheme } from "../context/ThemeContext";
 
 export const EditModal = ({
   todo,
@@ -13,6 +14,8 @@ export const EditModal = ({
   onSave: (id: string, text: string) => void;
 }) => {
   const [editText, setEditText] = useState(todo.title);
+
+  const { theme } = useTheme();
 
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -43,16 +46,10 @@ export const EditModal = ({
     dialogRef.current?.close();
   };
 
-  const [theme] = useTheme();
-
   return ReactDOM.createPortal(
     <dialog
       ref={dialogRef}
-      className="p-0 rounded
-    fixed top-1/2 left-1/2
-    -translate-x-1/2 -translate-y-1/2
-    backdrop:bg-black/30
-    backdrop:backdrop-blur-sm"
+      className="p-0 rounded fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  backdrop:bg-black/30 backdrop:backdrop-blur-sm"
     >
       <div
         className={` p-6 rounded shadow-lg relative w-96 ${theme === "dark" ? "bg-gray-700 text-white" : "bg-white"}`}

@@ -1,8 +1,10 @@
 import { useState, type JSX } from "react";
-import { EditModal } from "./EditModal";
+
 import type { Todo } from "../types/todo.types";
 import { useTodo } from "../hooks/useTodo";
-import { useTheme } from "../hooks/useTheme";
+import { useTheme } from "../context/ThemeContext";
+
+import { EditModal } from "./EditModal";
 
 type TodoItemProps = {
   todo: Todo;
@@ -11,7 +13,7 @@ const TodoItem = ({ todo }: TodoItemProps): JSX.Element => {
   const [isEditing, setIsEditing] = useState(false);
   const { handleDelete, handleStatusChange, handleUpdate } = useTodo();
 
-  const [theme] = useTheme();
+  const { theme } = useTheme();
 
   return (
     <div

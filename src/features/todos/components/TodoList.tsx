@@ -1,7 +1,10 @@
 import React from "react";
-import { TodoFilters } from "./TodoFilters";
+
 import { useTodo } from "../hooks/useTodo";
 import type { Todo } from "../types/todo.types";
+import { useTheme } from "../context/ThemeContext";
+
+import { TodoFilters } from "./TodoFilters";
 import TodoItem from "./TodoItem";
 
 type TodoListProps = {
@@ -16,8 +19,12 @@ const TodoList = ({
   setSelectedStatus,
 }: TodoListProps) => {
   const { todos } = useTodo();
+  const { theme } = useTheme();
+
   return (
-    <div className=" w-full max-w-lg bg-white shadow-lg rounded-lg p-4 flex flex-col flex-1 overflow-hidden min-h-0">
+    <div
+      className={` w-full max-w-lg  shadow-lg rounded-lg p-4 flex flex-col flex-1 overflow-hidden min-h-0 ${theme === "dark" ? "bg-gray-800 text-white" : "bg-white"}`}
+    >
       {todos.length == 0 ? (
         <h1>No Todo,Please Add </h1>
       ) : (

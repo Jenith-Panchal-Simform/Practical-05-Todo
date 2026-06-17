@@ -5,12 +5,12 @@ import { useTodo } from "../hooks/useTodo";
 import { filterTodaysTodos } from "../utils/filterTodaysTodo";
 import TodoList from "./TodoList";
 import type { Todo } from "../types/todo.types";
-import { useTheme } from "../hooks/useTheme";
+import { useTheme } from "../context/ThemeContext";
 
 export const Todos = (): JSX.Element => {
   const { todos } = useTodo();
   const [selectedStatus, setSelectedStatus] = useState("All");
-  const [theme] = useTheme();
+  const { theme, toggleTheme } = useTheme();
 
   function filterTodos(todos: Todo[], selectedStatus: string) {
     if (selectedStatus === "All") return todos;
@@ -20,6 +20,10 @@ export const Todos = (): JSX.Element => {
     () => filterTodaysTodos(filterTodos(todos, selectedStatus)),
     [todos, selectedStatus],
   );
+
+  function handleThemeChange() {
+    toggleTheme();
+  }
 
   return (
     <div
@@ -31,6 +35,12 @@ export const Todos = (): JSX.Element => {
         selectedStatus={selectedStatus}
         setSelectedStatus={setSelectedStatus}
       />
+      <button
+        className="px-4 py-2 rounded-md font-semibold transition-colors bg-white text-black border border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 "
+        onClick={handleThemeChange}
+      >
+        {theme == "dark" ? "Light Mode Button" : "Dark Mode Button"}
+      </button>
     </div>
   );
 };
