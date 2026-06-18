@@ -1,8 +1,14 @@
 export type Todo = {
-  id: string;
-  title: string;
-  status: "Incomplete" | "Complete";
-  date: string;
+  id: number;
+  todo: string;
+  completed: boolean;
+  userId: number;
+};
+
+export type NewTodo = {
+  todo: string;
+  completed: boolean;
+  userId: number;
 };
 
 export type Action =

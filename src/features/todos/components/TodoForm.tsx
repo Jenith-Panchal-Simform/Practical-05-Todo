@@ -1,30 +1,52 @@
 import { useRef } from "react";
+import { useDispatch } from "react-redux";
+import axios from "axios";
 
 import { Button } from "../../../components/Button";
 
-import { useTodo } from "../hooks/useTodo";
 import { useTheme } from "../context/ThemeContext";
+import { addTodo, setError, setLoading } from "../slice/TodoSlice";
+import { createTodo } from "../utils/todoService";
 
 export const TodoForm = () => {
   const input = useRef<HTMLInputElement>(null);
 
-  const { dispatch } = useTodo();
+  const dispatch = useDispatch();
 
   const { theme } = useTheme();
 
-  function handleAddTodo() {
+  async function handleAddTodo() {
     const inputText = input.current?.value.trim();
     if (!inputText) {
       alert("Empty Todo, Please Add some Task");
       return;
     }
-    dispatch({
-      type: "ADD",
-      payload: {
-        title: inputText,
-        id: crypto.randomUUID(),
-      },
-    });
+
+    //start Loading
+    dispatch(setLoading(true));
+
+    const todoItem = {
+      todo: inputText,
+      completed: false,
+      userId: 1,
+    };
+    try {
+      //call api and if succesfull add to todos
+      const response = await createTodo(todoItem);
+
+      if (response) {
+        dispatch(addTodo(response));
+      }
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        dispatch(setError(err.message)); // or err.response?.data
+      } else {
+        dispatch(setError("Unknown error"));
+      }
+    } finally {
+      dispatch(setLoading(false));
+    }
+
     if (input.current) input.current.value = "";
   }
   return (

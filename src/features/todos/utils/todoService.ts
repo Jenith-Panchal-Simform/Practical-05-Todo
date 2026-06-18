@@ -1,22 +1,22 @@
 import { httpMethods } from "../services/httpMethods";
-import type { Todo } from "../types/todo.types";
+import type { NewTodo, Todo } from "../types/todo.types";
 
-export const getProducts = () => {
+export const fetchTodos = () => {
   return httpMethods.get<Todo[]>("/todos");
 };
 
-export const getProduct = (id: string) => {
+export const fetchTodoById = (id: number) => {
   return httpMethods.get<Todo>(`/todos/${id}`);
 };
 
-export const addTodo = (data: Todo) => {
-  return httpMethods.put(`/todos/${data.id}`, data);
+export const createTodo = (data: NewTodo) => {
+  return httpMethods.post(`/todos/add`, data);
 };
 
-export const deleteTodo = (id: string) => {
+export const removeTodo = (id: number) => {
   return httpMethods.delete(`/todos/${id}`);
 };
 
-export const updateTodo = (data: Todo) => {
+export const editTodo = (data: Todo) => {
   return httpMethods.put(`/todos/${data.id}`, data);
 };
