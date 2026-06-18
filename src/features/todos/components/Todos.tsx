@@ -21,10 +21,6 @@ export const Todos = (): JSX.Element => {
     [todos, selectedStatus],
   );
 
-  function handleThemeChange() {
-    toggleTheme();
-  }
-
   return (
     <div
       className={`flex-7 flex flex-col gap-3 items-center  overflow-hidden min-h-0 p-4 ${theme === "dark" ? "bg-gray-900" : "bg-white"}`}
@@ -37,7 +33,7 @@ export const Todos = (): JSX.Element => {
       />
       <button
         className="px-4 py-2 rounded-md font-semibold transition-colors bg-white text-black border border-gray-300 hover:bg-gray-100 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 "
-        onClick={handleThemeChange}
+        onClick={toggleTheme}
       >
         {theme == "dark" ? "Light Mode Button" : "Dark Mode Button"}
       </button>

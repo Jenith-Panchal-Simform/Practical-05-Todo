@@ -14,9 +14,7 @@ export const EditModal = ({
   onSave: (id: string, text: string) => void;
 }) => {
   const [editText, setEditText] = useState(todo.title);
-
   const { theme } = useTheme();
-
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {

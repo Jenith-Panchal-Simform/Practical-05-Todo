@@ -7,9 +7,7 @@ import { useTheme } from "../context/ThemeContext";
 
 export const TodoForm = () => {
   const input = useRef<HTMLInputElement>(null);
-
   const { dispatch } = useTodo();
-
   const { theme } = useTheme();
 
   function handleAddTodo() {
