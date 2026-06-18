@@ -1,7 +1,10 @@
 import { useState, type JSX } from "react";
-import { EditModal } from "./EditModal";
+
 import type { Todo } from "../types/todo.types";
 import { useTodo } from "../hooks/useTodo";
+import { useTheme } from "../context/ThemeContext";
+
+import { EditModal } from "./EditModal";
 
 type TodoItemProps = {
   todo: Todo;
@@ -10,8 +13,12 @@ const TodoItem = ({ todo }: TodoItemProps): JSX.Element => {
   const [isEditing, setIsEditing] = useState(false);
   const { handleDelete, handleStatusChange, handleUpdate } = useTodo();
 
+  const { theme } = useTheme();
+
   return (
-    <div className="flex flex-col gap-3 p-4 border border-gray-300 rounded-lg w-full overflow-hidden">
+    <div
+      className={`flex flex-col gap-3 p-4 border  rounded-lg w-full overflow-hidden ${theme === "dark" ? "border-white" : "border-gray-300"}`}
+    >
       {/* top section */}
       <div className="flex gap-2 text-xl font-semibold items-start">
         <input
@@ -20,12 +27,12 @@ const TodoItem = ({ todo }: TodoItemProps): JSX.Element => {
           id={todo.id}
           checked={todo.status === "Complete"}
           name="task"
-          className="mt-1 appearance-none w-4 h-4 shrink-0 border border-gray-400 rounded-full checked:bg-gray-600 checked:border-gray-700 transition duration-200"
+          className={`mt-1 appearance-none w-4 h-4 shrink-0 border  rounded-full  transition duration-200 ${theme === "dark" ? "border-white checked:bg-green-600 checked:border-green-700" : "border-gray-400 checked:bg-gray-600 checked:border-gray-700"}`}
         />
         <div className="flex-1 min-w-0">
           <label
             htmlFor="task1"
-            className={`text-lg wrap-break-word ${todo.status === "Complete" ? "line-through text-gray-500" : ""}`}
+            className={`text-lg wrap-break-word ${todo.status === "Complete" ? (theme === "dark" ? "line-through text-gray-300" : "line-through text-gray-500") : ""}`}
           >
             {todo.title}
           </label>

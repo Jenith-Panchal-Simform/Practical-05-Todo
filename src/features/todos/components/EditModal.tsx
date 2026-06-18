@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
+
 import type { Todo } from "../types/todo.types";
+import { useTheme } from "../context/ThemeContext";
 
 export const EditModal = ({
   todo,
@@ -12,7 +14,7 @@ export const EditModal = ({
   onSave: (id: string, text: string) => void;
 }) => {
   const [editText, setEditText] = useState(todo.title);
-
+  const { theme } = useTheme();
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -45,13 +47,11 @@ export const EditModal = ({
   return ReactDOM.createPortal(
     <dialog
       ref={dialogRef}
-      className="p-0 rounded
-    fixed top-1/2 left-1/2
-    -translate-x-1/2 -translate-y-1/2
-    backdrop:bg-black/30
-    backdrop:backdrop-blur-sm"
+      className="p-0 rounded fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  backdrop:bg-black/30 backdrop:backdrop-blur-sm"
     >
-      <div className="bg-white p-6 rounded shadow-lg relative w-96">
+      <div
+        className={` p-6 rounded shadow-lg relative w-96 ${theme === "dark" ? "bg-gray-700 text-white" : "bg-white"}`}
+      >
         <h2 className="text-lg font-bold mb-4">Edit Todo</h2>
 
         <input
@@ -71,7 +71,7 @@ export const EditModal = ({
 
           <button
             onClick={() => dialogRef.current?.close()}
-            className="text-gray-600 cursor-pointer"
+            className="text-red-600 cursor-pointer"
           >
             Cancel
           </button>
