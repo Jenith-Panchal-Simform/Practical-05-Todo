@@ -1,9 +1,23 @@
+import axios from "axios";
+import { useDispatch } from "react-redux";
 import { useState, type JSX } from "react";
 
+<<<<<<< HEAD
 import type { LocalTodo } from "../types/todoTypes";
 import { useTheme } from "../context/ThemeContext";
 import { useTodoDispatch } from "../hooks/useTodoDispatch";
 import { deleteTodo, updateTodo } from "../store/slice/TodoThunk";
+=======
+import type { LocalTodo } from "../types/todo.types";
+import { useTheme } from "../context/ThemeContext";
+import {
+  deleteTodo,
+  setError,
+  setLoading,
+  updateTodo,
+} from "../slice/TodoSlice";
+import { removeTodo } from "../utils/todoService";
+>>>>>>> 420be07 (feat:add Local Todo and update functions of delete and update to mimic API call in TodoItem)
 
 import { EditModal } from "./EditModal";
 
