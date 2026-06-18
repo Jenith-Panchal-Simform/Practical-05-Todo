@@ -10,9 +10,7 @@ import { createTodo } from "../utils/todoService";
 
 export const TodoForm = () => {
   const input = useRef<HTMLInputElement>(null);
-
   const dispatch = useDispatch();
-
   const { theme } = useTheme();
 
   async function handleAddTodo() {

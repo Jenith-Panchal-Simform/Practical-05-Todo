@@ -20,7 +20,6 @@ type TodoItemProps = {
 const TodoItem = ({ todo }: TodoItemProps): JSX.Element => {
   const [isEditing, setIsEditing] = useState(false);
   const dispatch = useDispatch();
-
   const { theme } = useTheme();
 
   async function handleDelete(uid: number) {

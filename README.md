@@ -30,6 +30,6 @@
 
 ## Demo Link
 
-- Demo Link: https://refactor-context-logic.practical-05-todo.pages.dev/
-- Repository Link: https://github.com/Jenith-Panchal-Simform/Practical-05-Todo/tree/refactor/context-logic
-- Pull Request Link: https://github.com/Jenith-Panchal-Simform/Practical-05-Todo/pull/2
+- Demo Link: https://feat-redux.practical-05-todo.pages.dev/
+- Repository Link: https://github.com/Jenith-Panchal-Simform/Practical-05-Todo/tree/feat/redux
+- Pull Request Link: https://github.com/Jenith-Panchal-Simform/Practical-05-Todo/pull/4
