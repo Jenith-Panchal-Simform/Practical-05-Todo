@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 
-import type { Todo } from "../types/todo.types";
+import type { LocalTodo } from "../types/todo.types";
 import { useTheme } from "../context/ThemeContext";
 
 export const EditModal = ({
@@ -9,11 +9,11 @@ export const EditModal = ({
   onClose,
   onSave,
 }: {
-  todo: Todo;
+  todo: LocalTodo;
   onClose: () => void;
-  onSave: (id: string, text: string) => void;
+  onSave: (todo: LocalTodo, isStatusUpdated: boolean) => void;
 }) => {
-  const [editText, setEditText] = useState(todo.title);
+  const [editText, setEditText] = useState(todo.todo);
 
   const { theme } = useTheme();
 
@@ -42,7 +42,7 @@ export const EditModal = ({
       onClose();
       return;
     }
-    onSave(todo.id, trimmedText);
+    onSave({ ...todo, todo: trimmedText }, false);
     dialogRef.current?.close();
   };
 

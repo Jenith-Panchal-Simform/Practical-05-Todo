@@ -11,6 +11,10 @@ export type NewTodo = {
   userId: number;
 };
 
+export type LocalTodo = {
+  uid: number;
+} & Todo;
+
 export type Action =
   | { type: "ADD"; payload: { title: string; id: string } }
   | {

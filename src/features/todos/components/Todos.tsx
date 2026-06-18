@@ -1,24 +1,32 @@
 import { useMemo, useState } from "react";
 import type { JSX } from "react/jsx-runtime";
-import { TodoForm } from "./TodoForm";
-import { useTodo } from "../hooks/useTodo";
-import { filterTodaysTodos } from "../utils/filterTodaysTodo";
-import TodoList from "./TodoList";
-import type { Todo } from "../types/todo.types";
+
+import type { LocalTodo } from "../types/todo.types";
 import { useTheme } from "../context/ThemeContext";
+import { useTodoSelector } from "../hooks/useTodoSelector";
+
+import { TodoForm } from "./TodoForm";
+import TodoList from "./TodoList";
 
 export const Todos = (): JSX.Element => {
-  const { todos } = useTodo();
-  const [selectedStatus, setSelectedStatus] = useState("All");
+  const todos = useTodoSelector((state) => state.todos);
+
+  const [selectedStatus, setSelectedStatus] = useState<
+    "All" | "Incomplete" | "Complete"
+  >("All");
+
   const { theme, toggleTheme } = useTheme();
 
-  function filterTodos(todos: Todo[], selectedStatus: string) {
+  function filterTodos(todos: LocalTodo[], selectedStatus: string) {
     if (selectedStatus === "All") return todos;
-    return todos.filter((todo) => todo.status === selectedStatus);
+    else if (selectedStatus === "Complete")
+      return todos.filter((todo) => todo.completed === true);
+    else if (selectedStatus === "Incomplete")
+      return todos.filter((todo) => todo.completed === false);
   }
 
   const filteredTodos = useMemo(
-    () => filterTodaysTodos(filterTodos(todos, selectedStatus)),
+    () => filterTodos(todos, selectedStatus),
     [todos, selectedStatus],
   );
 

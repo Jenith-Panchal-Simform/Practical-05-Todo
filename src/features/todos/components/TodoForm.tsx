@@ -32,10 +32,16 @@ export const TodoForm = () => {
     };
     try {
       //call api and if succesfull add to todos
+
+      //api simulation
       const response = await createTodo(todoItem);
 
       if (response) {
-        dispatch(addTodo(response));
+        const localTodo = {
+          uid: Math.floor(Math.random() * 1e9),
+          ...response,
+        };
+        dispatch(addTodo(localTodo));
       }
     } catch (err) {
       if (axios.isAxiosError(err)) {

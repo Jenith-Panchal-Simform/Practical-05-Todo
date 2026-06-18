@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import type { Todo } from "../types/todo.types";
+import type { LocalTodo } from "../types/todo.types";
 
-type InitialStateType = {
-  todos: Todo[];
+export type InitialStateType = {
+  todos: LocalTodo[];
   loading: boolean;
   error: string | null;
 };
@@ -25,12 +25,12 @@ export const TodoSlice = createSlice({
     },
     deleteTodo: (state, action) => {
       state.todos = state.todos.filter((todo) => {
-        return todo.id !== action.payload;
+        return todo.uid !== action.payload;
       });
     },
     updateTodo: (state, action) => {
       const index = state.todos.findIndex(
-        (todo) => todo.id === action.payload.id,
+        (todo) => todo.uid === action.payload.uid,
       );
       if (index != -1) {
         state.todos[index] = action.payload;
