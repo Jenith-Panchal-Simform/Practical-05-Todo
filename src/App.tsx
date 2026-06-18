@@ -1,16 +1,17 @@
+import { Provider } from "react-redux";
 import { Header } from "./components/Header";
 import { Todos } from "./features/todos/components/Todos";
 import { ThemeProvider } from "./features/todos/context/ThemeProvider";
-import { TodosProvider } from "./features/todos/context/TodosProvider";
+import { TodoStore } from "./features/todos/store/TodoStore";
 
 function App() {
   return (
     <ThemeProvider>
       <div className="h-screen flex flex-col overflow-hidden">
         <Header />
-        <TodosProvider>
+        <Provider store={TodoStore}>
           <Todos />
-        </TodosProvider>
+        </Provider>
       </div>
     </ThemeProvider>
   );

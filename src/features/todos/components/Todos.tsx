@@ -16,6 +16,7 @@ export const Todos = (): JSX.Element => {
     if (selectedStatus === "All") return todos;
     return todos.filter((todo) => todo.status === selectedStatus);
   }
+
   const filteredTodos = useMemo(
     () => filterTodaysTodos(filterTodos(todos, selectedStatus)),
     [todos, selectedStatus],
