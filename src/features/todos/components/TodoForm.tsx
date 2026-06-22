@@ -1,16 +1,14 @@
 import { useRef } from "react";
-import { useDispatch } from "react-redux";
-import axios from "axios";
 
 import { Button } from "../../../components/Button";
 
 import { useTheme } from "../context/ThemeContext";
-import { addTodo, setError, setLoading } from "../slice/TodoSlice";
-import { createTodo } from "../utils/todoService";
+import { addTodo } from "../store/slice/TodoSlice";
+import { useTodoDispatch } from "../hooks/useTodoDispatch";
 
 export const TodoForm = () => {
   const input = useRef<HTMLInputElement>(null);
-  const dispatch = useDispatch();
+  const dispatch = useTodoDispatch();
   const { theme } = useTheme();
 
   async function handleAddTodo() {
@@ -20,36 +18,13 @@ export const TodoForm = () => {
       return;
     }
 
-    //start Loading
-    dispatch(setLoading(true));
-
     const todoItem = {
       todo: inputText,
       completed: false,
       userId: 1,
     };
-    try {
-      //call api and if succesfull add to todos
 
-      //api simulation
-      const response = await createTodo(todoItem);
-
-      if (response) {
-        const localTodo = {
-          uid: Math.floor(Math.random() * 1e9),
-          ...response,
-        };
-        dispatch(addTodo(localTodo));
-      }
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        dispatch(setError(err.message));
-      } else {
-        dispatch(setError("Unknown error"));
-      }
-    } finally {
-      dispatch(setLoading(false));
-    }
+    dispatch(addTodo(todoItem));
 
     if (input.current) input.current.value = "";
   }

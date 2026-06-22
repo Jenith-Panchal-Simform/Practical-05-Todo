@@ -1,22 +1,22 @@
-import { httpMethods } from "../services/httpMethods";
+import { DELETE, GET, POST, PUT } from "../services/httpMethods";
 import type { NewTodo, Todo } from "../types/todoTypes";
 
 export const fetchTodos = () => {
-  return httpMethods.get<Todo[]>("/todos");
+  return GET<Todo[]>("/todos");
 };
 
 export const fetchTodoById = (id: number) => {
-  return httpMethods.get<Todo>(`/todos/${id}`);
+  return GET<Todo>(`/todos/${id}`);
 };
 
 export const createTodo = (data: NewTodo) => {
-  return httpMethods.post(`/todos/add`, data);
+  return POST<Todo>(`/todos/add`, data);
 };
 
 export const removeTodo = (id: number) => {
-  return httpMethods.delete(`/todos/${id}`);
+  return DELETE<Todo>(`/todos/${id}`);
 };
 
-export const editTodo = (data: Todo) => {
-  return httpMethods.put(`/todos/${data.id}`, data);
+export const editTodo = (data: Todo): Promise<Todo> => {
+  return PUT<Todo>(`/todos/${data.id}`, data);
 };

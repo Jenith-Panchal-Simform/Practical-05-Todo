@@ -1,66 +1,30 @@
-import axios from "axios";
-import { useDispatch } from "react-redux";
 import { useState, type JSX } from "react";
 
 import type { LocalTodo } from "../types/todoTypes";
 import { useTheme } from "../context/ThemeContext";
-import {
-  deleteTodo,
-  setError,
-  setLoading,
-  updateTodo,
-} from "../slice/TodoSlice";
-import { removeTodo } from "../utils/todoService";
+import { deleteTodo, updateTodo } from "../store/slice/TodoSlice";
 
 import { EditModal } from "./EditModal";
+import { useTodoDispatch } from "../hooks/useTodoDispatch";
 
 type TodoItemProps = {
   todo: LocalTodo;
 };
 const TodoItem = ({ todo }: TodoItemProps): JSX.Element => {
   const [isEditing, setIsEditing] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useTodoDispatch();
   const { theme } = useTheme();
 
-  async function handleDelete(uid: number) {
-    //set loading to true
-    dispatch(setLoading(true));
-    try {
-      //api simulation
-      const res = await removeTodo(1);
-      if (res) {
-        //local todo state update
-        dispatch(deleteTodo(uid));
-      }
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        dispatch(setError(err.message));
-      }
-    } finally {
-      dispatch(setLoading(false));
-    }
+  function handleDelete(uid: number) {
+    dispatch(deleteTodo(uid));
   }
 
-  async function handleUpdate(todo: LocalTodo, isStatusUpdated: boolean) {
-    dispatch(setLoading(true));
-    try {
-      if (isStatusUpdated) {
-        const editedTodo = todo.completed
-          ? { ...todo, completed: false }
-          : { ...todo, completed: true };
-        dispatch(updateTodo(editedTodo));
-      } else {
-        dispatch(updateTodo(todo));
-      }
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        dispatch(setError(err.message)); // or err.response?.data
-      } else {
-        dispatch(setError("Unknown error"));
-      }
-    } finally {
-      dispatch(setLoading(false));
-    }
+  function handleUpdate(todo: LocalTodo, isStatusUpdated: boolean) {
+    const editedTodo = isStatusUpdated
+      ? { ...todo, completed: !todo.completed }
+      : todo;
+
+    dispatch(updateTodo(editedTodo));
   }
 
   return (
