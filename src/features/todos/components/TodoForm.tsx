@@ -43,7 +43,7 @@ export const TodoForm = () => {
       }
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        dispatch(setError(err.message)); // or err.response?.data
+        dispatch(setError(err.message));
       } else {
         dispatch(setError("Unknown error"));
       }
