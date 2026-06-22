@@ -2,10 +2,10 @@ import { useState, type JSX } from "react";
 
 import type { LocalTodo } from "../types/todoTypes";
 import { useTheme } from "../context/ThemeContext";
-import { deleteTodo, updateTodo } from "../store/slice/TodoSlice";
+import { useTodoDispatch } from "../hooks/useTodoDispatch";
+import { deleteTodo, updateTodo } from "../store/slice/TodoThunk";
 
 import { EditModal } from "./EditModal";
-import { useTodoDispatch } from "../hooks/useTodoDispatch";
 
 type TodoItemProps = {
   todo: LocalTodo;

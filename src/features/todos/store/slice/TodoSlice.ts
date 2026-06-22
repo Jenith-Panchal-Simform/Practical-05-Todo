@@ -1,7 +1,8 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-import type { LocalTodo, NewTodo, Todo } from "../../types/todoTypes";
-import { createTodo, editTodo, removeTodo } from "../../utils/todoService";
+import { addTodo, deleteTodo, updateTodo } from "./TodoThunk";
+
+import type { LocalTodo } from "../../types/todoTypes";
 
 export type InitialStateType = {
   todos: LocalTodo[];
@@ -13,37 +14,6 @@ const initialState: InitialStateType = {
   loading: false,
   error: null,
 };
-
-export const addTodo = createAsyncThunk<LocalTodo, NewTodo>(
-  "Todo/addTodoToAPI",
-  async (todoItem) => {
-    const response: Todo = await createTodo(todoItem);
-    return { uid: Math.floor(Math.random() * 1e9), ...response };
-  },
-);
-
-export const deleteTodo = createAsyncThunk<number, number>(
-  "Todo/deleteTodoAPI",
-  async (uid) => {
-    // pretend to call API
-    await removeTodo(1);
-
-    return uid;
-  },
-);
-
-export const updateTodo = createAsyncThunk<LocalTodo, LocalTodo>(
-  "Todo/updateTodoAPI",
-  async (todo) => {
-    try {
-      // will fail for ids > 200
-      await editTodo(todo);
-    } catch {
-      // ignore error since we only care about local state
-    }
-    return todo;
-  },
-);
 
 export const TodoSlice = createSlice({
   name: "Todo",

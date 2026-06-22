@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { Button } from "../../../components/Button";
 
 import { useTheme } from "../context/ThemeContext";
-import { addTodo } from "../store/slice/TodoSlice";
+import { addTodo } from "../store/slice/TodoThunk";
 import { useTodoDispatch } from "../hooks/useTodoDispatch";
 
 export const TodoForm = () => {
