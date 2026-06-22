@@ -16,7 +16,6 @@ export const EditModal = ({
   const [editText, setEditText] = useState(todo.todo);
 
   const { theme } = useTheme();
-
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
