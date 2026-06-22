@@ -1,14 +1,13 @@
 import { useMemo, useState } from "react";
-import type { JSX } from "react/jsx-runtime";
 
-import type { LocalTodo } from "../types/todo.types";
+import type { LocalTodo } from "../types/todoTypes";
 import { useTheme } from "../context/ThemeContext";
 import { useTodoSelector } from "../hooks/useTodoSelector";
 
 import { TodoForm } from "./TodoForm";
 import TodoList from "./TodoList";
 
-export const Todos = (): JSX.Element => {
+export const Todos = () => {
   const todos = useTodoSelector((state) => state.todos);
   const [selectedStatus, setSelectedStatus] = useState<
     "All" | "Incomplete" | "Complete"

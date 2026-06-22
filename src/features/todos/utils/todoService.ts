@@ -1,5 +1,5 @@
 import { httpMethods } from "../services/httpMethods";
-import type { NewTodo, Todo } from "../types/todo.types";
+import type { NewTodo, Todo } from "../types/todoTypes";
 
 export const fetchTodos = () => {
   return httpMethods.get<Todo[]>("/todos");

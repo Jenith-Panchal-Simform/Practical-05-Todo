@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import type { LocalTodo } from "../types/todo.types";
+import type { LocalTodo } from "../types/todoTypes";
 
 export type InitialStateType = {
   todos: LocalTodo[];

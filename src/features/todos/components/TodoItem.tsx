@@ -2,7 +2,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useState, type JSX } from "react";
 
-import type { LocalTodo } from "../types/todo.types";
+import type { LocalTodo } from "../types/todoTypes";
 import { useTheme } from "../context/ThemeContext";
 import {
   deleteTodo,
@@ -35,8 +35,6 @@ const TodoItem = ({ todo }: TodoItemProps): JSX.Element => {
     } catch (err) {
       if (axios.isAxiosError(err)) {
         dispatch(setError(err.message));
-      } else {
-        dispatch(setError("Unknown error"));
       }
     } finally {
       dispatch(setLoading(false));

@@ -2,7 +2,7 @@ import React from "react";
 
 import { useTheme } from "../context/ThemeContext";
 
-import type { LocalTodo } from "../types/todo.types";
+import type { LocalTodo } from "../types/todoTypes";
 import { useTodoSelector } from "../hooks/useTodoSelector";
 
 import { TodoFilters } from "./TodoFilters";

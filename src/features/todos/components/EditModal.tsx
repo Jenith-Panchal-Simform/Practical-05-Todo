@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 
-import type { LocalTodo } from "../types/todo.types";
+import type { LocalTodo } from "../types/todoTypes";
 import { useTheme } from "../context/ThemeContext";
 
 export const EditModal = ({
