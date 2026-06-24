@@ -8,6 +8,7 @@
 - Allow users to show date and time when the todo was created
 - Allow users to filter completed and incompleted todos
 - The list items created on a day should be available all the time, for the same day, and should not get removed on reloading. But if the user opens the list the next day, it should get reset with no items. For this, you will need to set the data in cookie/local storage with an expiration trigger.
+- Add a functionality for theme change
 ---
 
 ## How to Run
@@ -30,6 +31,6 @@
 
 ## Demo Link
 
-- Demo Link: https://refactor-context-logic.practical-05-todo.pages.dev/
+- Demo Link: https://feat-theme.practical-05-todo.pages.dev/)
 - Repository Link: https://github.com/Jenith-Panchal-Simform/Practical-05-Todo/tree/refactor/context-logic
 - Pull Request Link: https://github.com/Jenith-Panchal-Simform/Practical-05-Todo/pull/2
