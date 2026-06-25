@@ -1,11 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createTodo, editTodo, removeTodo } from "../../utils/todoService";
+
 import type { LocalTodo, NewTodo, Todo } from "../../types/todoTypes";
+import { DELETE, POST, PUT } from "../../services/httpMethods";
 
 export const addTodo = createAsyncThunk<LocalTodo, NewTodo>(
   "Todo/addTodoToAPI",
   async (todoItem) => {
-    const response: Todo = await createTodo(todoItem);
+    const response: Todo = await POST<Todo>(`/todos/add`, todoItem);
     return { uid: Math.floor(Math.random() * 1e9), ...response };
   },
 );
@@ -13,9 +14,12 @@ export const addTodo = createAsyncThunk<LocalTodo, NewTodo>(
 export const deleteTodo = createAsyncThunk<number, number>(
   "Todo/deleteTodoAPI",
   async (uid) => {
-    // pretend to call API
-    await removeTodo(1);
-
+    try {
+      // pretend to call API
+      await DELETE<Todo>(`/todos/${uid}`);
+    } catch {
+      // ignore error since we only care about local state
+    }
     return uid;
   },
 );
@@ -25,7 +29,7 @@ export const updateTodo = createAsyncThunk<LocalTodo, LocalTodo>(
   async (todo) => {
     try {
       // will fail for ids > 200
-      await editTodo(todo);
+      await PUT<Todo>(`/todos/${todo.id}`, todo);
     } catch {
       // ignore error since we only care about local state
     }
