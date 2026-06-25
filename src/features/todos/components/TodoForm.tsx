@@ -2,27 +2,30 @@ import { useRef } from "react";
 
 import { Button } from "../../../components/Button";
 
-import { useTodo } from "../hooks/useTodo";
 import { useTheme } from "../context/ThemeContext";
+import { addTodo } from "../store/slice/TodoThunk";
+import { useTodoDispatch } from "../hooks/useTodoDispatch";
 
 export const TodoForm = () => {
   const input = useRef<HTMLInputElement>(null);
-  const { dispatch } = useTodo();
+  const dispatch = useTodoDispatch();
   const { theme } = useTheme();
 
-  function handleAddTodo() {
+  async function handleAddTodo() {
     const inputText = input.current?.value.trim();
     if (!inputText) {
       alert("Empty Todo, Please Add some Task");
       return;
     }
-    dispatch({
-      type: "ADD",
-      payload: {
-        title: inputText,
-        id: crypto.randomUUID(),
-      },
-    });
+
+    const todoItem = {
+      todo: inputText,
+      completed: false,
+      userId: 1,
+    };
+
+    dispatch(addTodo(todoItem));
+
     if (input.current) input.current.value = "";
   }
   return (

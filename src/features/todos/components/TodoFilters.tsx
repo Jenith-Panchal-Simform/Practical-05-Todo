@@ -2,7 +2,9 @@ import React from "react";
 import { Button } from "../../../components/Button";
 type TodoFiltersProps = {
   selectedStatus: string;
-  setSelectedStatus: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedStatus: React.Dispatch<
+    React.SetStateAction<"All" | "Incomplete" | "Complete">
+  >;
 };
 export const TodoFilters = ({
   selectedStatus,

@@ -1,16 +1,19 @@
 import React from "react";
 
-import { useTodo } from "../hooks/useTodo";
-import type { Todo } from "../types/todo.types";
 import { useTheme } from "../context/ThemeContext";
+
+import type { LocalTodo } from "../types/todoTypes";
+import { useTodoSelector } from "../hooks/useTodoSelector";
 
 import { TodoFilters } from "./TodoFilters";
 import TodoItem from "./TodoItem";
 
 type TodoListProps = {
-  filteredTodos: Todo[];
+  filteredTodos: LocalTodo[] | undefined;
   selectedStatus: string;
-  setSelectedStatus: React.Dispatch<React.SetStateAction<string>>;
+  setSelectedStatus: React.Dispatch<
+    React.SetStateAction<"All" | "Incomplete" | "Complete">
+  >;
 };
 
 const TodoList = ({
@@ -18,7 +21,7 @@ const TodoList = ({
   selectedStatus,
   setSelectedStatus,
 }: TodoListProps) => {
-  const { todos } = useTodo();
+  const todos = useTodoSelector((state) => state.todos);
   const { theme } = useTheme();
 
   return (
@@ -34,16 +37,11 @@ const TodoList = ({
             setSelectedStatus={setSelectedStatus}
           />
           <ul className="flex flex-col gap-1.5 overflow-y-auto flex-1 min-h-0">
-            {filteredTodos.map((todo) => {
-              const dateOnly = todo.date.split(",")[0];
-              const today = new Date().toLocaleDateString();
-              return dateOnly === today ? (
-                <li key={todo.id}>
-                  {/* Hello */}
+            {filteredTodos?.map((todo) => {
+              return (
+                <li key={todo.uid}>
                   <TodoItem todo={todo} />
                 </li>
-              ) : (
-                "Null"
               );
             })}
           </ul>

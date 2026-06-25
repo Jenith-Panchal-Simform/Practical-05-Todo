@@ -1,9 +1,19 @@
 export type Todo = {
-  id: string;
-  title: string;
-  status: "Incomplete" | "Complete";
-  date: string;
+  id: number;
+  todo: string;
+  completed: boolean;
+  userId: number;
 };
+
+export type NewTodo = {
+  todo: string;
+  completed: boolean;
+  userId: number;
+};
+
+export type LocalTodo = {
+  uid: number;
+} & Todo;
 
 export type Action =
   | { type: "ADD"; payload: { title: string; id: string } }
